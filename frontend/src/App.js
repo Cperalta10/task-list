@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState } from "react";
+import Todos from "./components/Todos/Todos";
+import Auth from "./components/Auth/Auth";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [user, setUser] = useState(false);
+
+    return (
+        <div className="App">
+            <Routes>
+                <Route
+                    path="/"
+                    element={
+                        user ? <Navigate to="home" /> : <Navigate to="auth" />
+                    }
+                />
+                <Route
+                    path="/home"
+                    element={user ? <Todos /> : <Navigate to="../auth" />}
+                />
+                <Route
+                    path="/auth"
+                    element={
+                        user ? (
+                            <Navigate to="../home" />
+                        ) : (
+                            <Auth setUser={setUser} user={user} />
+                        )
+                    }
+                />
+            </Routes>
+        </div>
+    );
 }
 
 export default App;

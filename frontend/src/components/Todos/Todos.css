@@ -1,0 +1,57 @@
+.todo {
+    display: flex;
+    gap: 1rem;
+    margin: 0.5rem;
+}
+
+input {
+    width: 350px;
+    /* color: black; */
+    font-size: 18px;
+}
+
+.addTodo {
+    padding-bottom: 1rem;
+}
+
+.add {
+    font-size: 18px;
+    background-color: white;
+    color: black;
+    padding-top: 0.1rem;
+    padding-bottom: 0.1rem;
+    font-size: 18px;
+    margin-left: 0.5rem;
+}
+
+.icon {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.icons {
+    display: flex;
+    align-items: center;
+}
+
+.text {
+    background-color: white;
+    color: black;
+    padding: 0.5rem 0.5rem 0.5rem 0.2rem;
+}
+
+.scroll {
+    height: 500px;
+    overflow-y: auto;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scroll::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scroll {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
