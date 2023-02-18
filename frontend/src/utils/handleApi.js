@@ -1,10 +1,51 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:9000/todos";
+const baseUrl = "http://localhost:9000";
+
+const signup = (email, username) => {
+    axios
+        .post(`${baseUrl}/user/signup`, { email, username })
+        .then((data) => {
+            // console.log("data --->", data);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+const getUserId = (email, setUserId) => {
+    axios
+        .get(`${baseUrl}/user`)
+        .then(({ data }) => {
+            // console.log("data --->", data.users);
+            const user = data.users.filter(
+                (userEmail) => userEmail.email === email
+            );
+            setUserId(user[0]._id);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
+
+const getAllUserTodos = (userId, setTodo) => {
+    axios
+        .get(`${baseUrl}/todos`)
+        .then(({ data }) => {
+            // console.log("data --->", data);
+            const userTodos = data.filter(
+                (userTodo) => userTodo.userId === userId
+            );
+            setTodo(userTodos);
+        })
+        .catch((err) => {
+            console.log(err);
+        });
+};
 
 const getAllTodo = (setTodo) => {
     axios
-        .get(baseUrl)
+        .get(`${baseUrl}/todos`)
         .then(({ data }) => {
             // console.log("data --->", data);
             setTodo(data);
@@ -14,22 +55,22 @@ const getAllTodo = (setTodo) => {
         });
 };
 
-const addTodo = (text, setText, setTodo) => {
+const addTodo = (text, userId, setText, setTodo) => {
     axios
-        .post(`${baseUrl}/save`, { text })
+        .post(`${baseUrl}/todos/save`, { text, userId })
         .then((data) => {
             // console.log("data --->", data);
             setText("");
-            getAllTodo(setTodo);
+            getAllUserTodos(userId, setTodo);
         })
         .catch((err) => {
             console.log(err);
         });
 };
 
-const updateTodo = (todoId, text, setTodo, setText, setIsUpdating) => {
+const updateTodo = (todoId, userId, text, setTodo, setText, setIsUpdating) => {
     axios
-        .put(`${baseUrl}/update`, { _id: todoId, text })
+        .put(`${baseUrl}/todos/${todoId}`, { userId, text })
         .then((data) => {
             // console.log("data --->", data);
             setText("");
@@ -55,18 +96,15 @@ const updateTodo = (todoId, text, setTodo, setText, setIsUpdating) => {
         });
 };
 
-const updateComplete = (todoId, completed, setTodo, setText, setIsUpdating) => {
+const updateComplete = (todoId, completed, setTodo) => {
     axios
-        .put(`${baseUrl}/completed`, { _id: todoId, completed })
+        .put(`${baseUrl}/todos/completed/${todoId}`, { completed })
         .then((data) => {
-            console.log(data);
-            // console.log("data --->", data);
-            // setText("");
-            // setIsUpdating(false);
             setTodo((prevState) => {
                 const newTodos = prevState.map((todo) => {
                     if (todo._id === todoId) {
                         return {
+                            todo,
                             ...todo,
                             completed: !completed,
                         };
@@ -82,14 +120,16 @@ const updateComplete = (todoId, completed, setTodo, setText, setIsUpdating) => {
         });
 };
 
-const deleteTodo = (_id, setTodo) => {
+const deleteTodo = (todoId, setTodo) => {
     axios
-        .delete(`${baseUrl}/delete/${_id}`)
+        .delete(`${baseUrl}/todos/delete/${todoId}`)
         .then((data) => {
-            console.log("data --->", data);
+            // console.log("data --->", data);
 
             setTodo((prevState) => {
-                const newTodos = prevState.filter((todo) => todo._id !== _id);
+                const newTodos = prevState.filter(
+                    (todo) => todo._id !== todoId
+                );
 
                 return newTodos;
             });
@@ -99,4 +139,13 @@ const deleteTodo = (_id, setTodo) => {
         });
 };
 
-export { getAllTodo, addTodo, updateTodo, deleteTodo, updateComplete };
+export {
+    getAllTodo,
+    addTodo,
+    updateTodo,
+    deleteTodo,
+    updateComplete,
+    signup,
+    getUserId,
+    getAllUserTodos,
+};

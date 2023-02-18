@@ -5,7 +5,7 @@ import Auth from "./components/Auth/Auth";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 function App() {
-    const [user, setUser] = useState(false);
+    const [userId, setUserId] = useState("");
 
     return (
         <div className="App">
@@ -13,20 +13,26 @@ function App() {
                 <Route
                     path="/"
                     element={
-                        user ? <Navigate to="home" /> : <Navigate to="auth" />
+                        userId ? <Navigate to="home" /> : <Navigate to="auth" />
                     }
                 />
                 <Route
                     path="/home"
-                    element={user ? <Todos /> : <Navigate to="../auth" />}
+                    element={
+                        userId ? (
+                            <Todos userId={userId} />
+                        ) : (
+                            <Navigate to="../auth" />
+                        )
+                    }
                 />
                 <Route
                     path="/auth"
                     element={
-                        user ? (
+                        userId ? (
                             <Navigate to="../home" />
                         ) : (
-                            <Auth setUser={setUser} user={user} />
+                            <Auth setUserId={setUserId} userId={userId} />
                         )
                     }
                 />

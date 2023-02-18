@@ -7,16 +7,18 @@ import {
     updateTodo,
     deleteTodo,
     updateComplete,
+    getAllUserTodos,
 } from "../../utils/handleApi";
 
-const Todos = () => {
+const Todos = ({ userId }) => {
     const [todo, setTodo] = useState([]);
     const [text, setText] = useState("");
     const [isUpdating, setIsUpdating] = useState(false);
     const [todoId, setTodoId] = useState("");
 
     useEffect(() => {
-        getAllTodo(setTodo);
+        getAllUserTodos(userId, setTodo);
+        // getAllTodo(setTodo);
     }, []);
 
     const updateMode = (_id, text) => {
@@ -49,12 +51,13 @@ const Todos = () => {
                             ? () =>
                                   updateTodo(
                                       todoId,
+                                      userId,
                                       text,
                                       setTodo,
                                       setText,
                                       setIsUpdating
                                   )
-                            : () => addTodo(text, setText, setTodo)
+                            : () => addTodo(text, userId, setText, setTodo)
                     }
                     className="add"
                 >

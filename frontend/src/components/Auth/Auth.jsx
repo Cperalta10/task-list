@@ -1,19 +1,18 @@
-import React, { useState } from "react";
+import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
+import { signup, getUserId } from "../../utils/handleApi";
 
-function Auth({ setUser, user }) {
-    const [name, setName] = useState("");
-
+function Auth({ setUserId, userId }) {
     return (
         <div>
             <GoogleLogin
                 onSuccess={(credentialResponse) => {
-                    console.log(credentialResponse.credential);
+                    // console.log(credentialResponse.credential);
                     var decoded = jwt_decode(credentialResponse.credential);
-                    console.log(decoded);
-                    setName(decoded.name);
-                    setUser(!user);
+                    // console.log(decoded);
+                    signup(decoded.email, decoded.name);
+                    getUserId(decoded.email, setUserId);
                 }}
                 onError={() => {
                     console.log("Login Failed");

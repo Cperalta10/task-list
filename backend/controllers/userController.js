@@ -12,9 +12,7 @@ const signup = async (req, res, next) => {
     }
 
     if (user) {
-        return res
-            .status(400)
-            .json({ message: "User already exist... Login instead." });
+        return res.status(201).json({ user });
     }
 
     const newUser = new User(req.body);
