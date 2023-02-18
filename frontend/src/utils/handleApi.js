@@ -5,9 +5,7 @@ const baseUrl = "http://localhost:9000";
 const signup = (email, username) => {
     axios
         .post(`${baseUrl}/user/signup`, { email, username })
-        .then((data) => {
-            // console.log("data --->", data);
-        })
+        .then((data) => {})
         .catch((err) => {
             console.log(err);
         });
@@ -17,7 +15,6 @@ const getUserId = (email, setUserId) => {
     axios
         .get(`${baseUrl}/user`)
         .then(({ data }) => {
-            // console.log("data --->", data.users);
             const user = data.users.filter(
                 (userEmail) => userEmail.email === email
             );
@@ -32,7 +29,6 @@ const getAllUserTodos = (userId, setTodo) => {
     axios
         .get(`${baseUrl}/todos`)
         .then(({ data }) => {
-            // console.log("data --->", data);
             const userTodos = data.filter(
                 (userTodo) => userTodo.userId === userId
             );
@@ -47,7 +43,6 @@ const getAllTodo = (setTodo) => {
     axios
         .get(`${baseUrl}/todos`)
         .then(({ data }) => {
-            // console.log("data --->", data);
             setTodo(data);
         })
         .catch((err) => {
@@ -59,7 +54,6 @@ const addTodo = (text, userId, setText, setTodo) => {
     axios
         .post(`${baseUrl}/todos/save`, { text, userId })
         .then((data) => {
-            // console.log("data --->", data);
             setText("");
             getAllUserTodos(userId, setTodo);
         })
@@ -72,7 +66,6 @@ const updateTodo = (todoId, userId, text, setTodo, setText, setIsUpdating) => {
     axios
         .put(`${baseUrl}/todos/${todoId}`, { userId, text })
         .then((data) => {
-            // console.log("data --->", data);
             setText("");
             setIsUpdating(false);
 
@@ -124,8 +117,6 @@ const deleteTodo = (todoId, setTodo) => {
     axios
         .delete(`${baseUrl}/todos/delete/${todoId}`)
         .then((data) => {
-            // console.log("data --->", data);
-
             setTodo((prevState) => {
                 const newTodos = prevState.filter(
                     (todo) => todo._id !== todoId

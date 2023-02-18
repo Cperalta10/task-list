@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { BiEdit } from "react-icons/bi";
-import { AiFillDelete } from "react-icons/ai";
 import { ImCheckboxUnchecked } from "react-icons/im";
 import { ImCheckboxChecked } from "react-icons/im";
+import "./Todo.css";
+import DeleteModal from "../Modal/DeleteModal";
 
 const Todo = ({
     text,
@@ -13,18 +14,12 @@ const Todo = ({
     id,
     setTodo,
 }) => {
-    // const [completed, setCompleted] = useState(false);
-
-    // const completedSwitch = () => {
-    //     setCompleted(!completed);
-    // };
-
     return (
         <div className="todo">
-            <div className={!completed ? "text green" : "text"}>{text}</div>
+            <div className={completed ? "green" : "text"}>{text}</div>
             <div className="icons">
                 <BiEdit className="icon" onClick={updateMode} />
-                <AiFillDelete className="icon" onClick={deleteTodo} />
+                <DeleteModal deleteTodo={deleteTodo}></DeleteModal>
                 {completed ? (
                     <ImCheckboxChecked
                         onClick={() => updateComplete(id, completed, setTodo)}

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./Todos.css";
 import Todo from "../Todo/Todo";
 import {
-    getAllTodo,
     addTodo,
     updateTodo,
     deleteTodo,
@@ -10,7 +9,7 @@ import {
     getAllUserTodos,
 } from "../../utils/handleApi";
 
-const Todos = ({ userId }) => {
+const Todos = ({ userId, setUserId }) => {
     const [todo, setTodo] = useState([]);
     const [text, setText] = useState("");
     const [isUpdating, setIsUpdating] = useState(false);
@@ -18,7 +17,6 @@ const Todos = ({ userId }) => {
 
     useEffect(() => {
         getAllUserTodos(userId, setTodo);
-        // getAllTodo(setTodo);
     }, []);
 
     const updateMode = (_id, text) => {
@@ -29,6 +27,11 @@ const Todos = ({ userId }) => {
 
     return (
         <div className="todos box scroll">
+            <div className="logout">
+                <button className="logoutBtn" onClick={() => setUserId("")}>
+                    Logout
+                </button>
+            </div>
             <h1
                 style={{
                     textAlign: "center",
@@ -44,6 +47,7 @@ const Todos = ({ userId }) => {
                     placeholder="Add a todo..."
                     value={text}
                     onChange={(e) => setText(e.target.value)}
+                    className="inputAdd"
                 />
                 <button
                     onClick={
@@ -72,7 +76,9 @@ const Todos = ({ userId }) => {
                     setTodo={setTodo}
                     completed={todo.completed}
                     updateMode={() => updateMode(todo._id, todo.text)}
-                    deleteTodo={() => deleteTodo(todo._id, setTodo)}
+                    deleteTodo={() => {
+                        deleteTodo(todo._id, setTodo);
+                    }}
                     updateComplete={updateComplete}
                 />
             ))}

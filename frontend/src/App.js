@@ -20,7 +20,7 @@ function App() {
                     path="/home"
                     element={
                         userId ? (
-                            <Todos userId={userId} />
+                            <Todos setUserId={setUserId} userId={userId} />
                         ) : (
                             <Navigate to="../auth" />
                         )
