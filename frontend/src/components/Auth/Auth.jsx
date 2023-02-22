@@ -1,7 +1,7 @@
 import React from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import jwt_decode from "jwt-decode";
-import { signup, getUserId } from "../../utils/handleApi";
+import { signup } from "../../utils/handleApi";
 
 function Auth({ setUserId }) {
     return (
@@ -9,8 +9,7 @@ function Auth({ setUserId }) {
             <GoogleLogin
                 onSuccess={(credentialResponse) => {
                     var decoded = jwt_decode(credentialResponse.credential);
-                    signup(decoded.email, decoded.name);
-                    getUserId(decoded.email, setUserId);
+                    signup(decoded.email, decoded.name, setUserId);
                 }}
                 onError={() => {
                     console.log("Login Failed");

@@ -1,11 +1,13 @@
 import axios from "axios";
 
-const baseUrl = "https://task-list-six-pink.vercel.app/";
+const baseUrl = "http://localhost:9000";
 
-const signup = (email, username) => {
+const signup = (email, username, setUserId) => {
     axios
         .post(`${baseUrl}/user/signup`, { email, username })
-        .then((data) => {})
+        .then((data) => {
+            getUserId(data.data.user.email, setUserId);
+        })
         .catch((err) => {
             console.log(err);
         });
@@ -29,10 +31,14 @@ const getAllUserTodos = (userId, setTodo) => {
     axios
         .get(`${baseUrl}/todos`)
         .then(({ data }) => {
-            const userTodos = data.filter(
-                (userTodo) => userTodo.userId === userId
-            );
-            setTodo(userTodos);
+            if (data) {
+                const userTodos = data.filter(
+                    (userTodo) => userTodo.userId === userId
+                );
+                setTodo(userTodos || []);
+            } else {
+                setTodo([]);
+            }
         })
         .catch((err) => {
             console.log(err);
