@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://task-list-six-pink.vercel.app";
+const baseUrl = "https://todods.onrender.com";
 
 const signup = (email, username, setUserId) => {
     axios
