@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://localhost:9000";
+const baseUrl = "https://task-list-six-pink.vercel.app/";
 
 const signup = (email, username) => {
     axios
