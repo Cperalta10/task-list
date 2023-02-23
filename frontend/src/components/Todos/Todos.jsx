@@ -9,14 +9,15 @@ import {
     getAllUserTodos,
 } from "../../utils/handleApi";
 
-const Todos = ({ userId, setUserId }) => {
+const Todos = ({ user, setUser }) => {
+    const { _id } = user;
     const [todo, setTodo] = useState([]);
     const [text, setText] = useState("");
     const [isUpdating, setIsUpdating] = useState(false);
     const [todoId, setTodoId] = useState("");
 
     useEffect(() => {
-        getAllUserTodos(userId, setTodo);
+        getAllUserTodos(_id, setTodo);
     }, []);
 
     const updateMode = (_id, text) => {
@@ -28,7 +29,8 @@ const Todos = ({ userId, setUserId }) => {
     return (
         <div className="todos box scroll">
             <div className="logout">
-                <button className="logoutBtn" onClick={() => setUserId("")}>
+                <h2>Welcome, {user.username}</h2>
+                <button className="logoutBtn" onClick={() => setUser("")}>
                     Logout
                 </button>
             </div>
@@ -55,13 +57,13 @@ const Todos = ({ userId, setUserId }) => {
                             ? () =>
                                   updateTodo(
                                       todoId,
-                                      userId,
+                                      _id,
                                       text,
                                       setTodo,
                                       setText,
                                       setIsUpdating
                                   )
-                            : () => addTodo(text, userId, setText, setTodo)
+                            : () => addTodo(text, _id, setText, setTodo)
                     }
                     className="add"
                 >

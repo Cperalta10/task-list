@@ -2,25 +2,12 @@ import axios from "axios";
 
 const baseUrl = "https://todods.onrender.com";
 
-const signup = (email, username, setUserId) => {
+const signup = (email, username, setUser) => {
     axios
         .post(`${baseUrl}/user/signup`, { email, username })
         .then((data) => {
-            getUserId(data.data.user.email, setUserId);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
-};
-
-const getUserId = (email, setUserId) => {
-    axios
-        .get(`${baseUrl}/user`)
-        .then(({ data }) => {
-            const user = data.users.filter(
-                (userEmail) => userEmail.email === email
-            );
-            setUserId(user[0]._id);
+            setUser(data.data.user);
+            console.log(data.data.user);
         })
         .catch((err) => {
             console.log(err);
@@ -143,6 +130,5 @@ export {
     deleteTodo,
     updateComplete,
     signup,
-    getUserId,
     getAllUserTodos,
 };
