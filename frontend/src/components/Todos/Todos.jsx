@@ -9,7 +9,7 @@ import {
     getAllUserTodos,
 } from "../../utils/handleApi";
 
-const Todos = ({ user, setUser }) => {
+const Todos = ({ user, setUser, setLoading }) => {
     const { _id } = user;
     const [todo, setTodo] = useState([]);
     const [text, setText] = useState("");
@@ -18,6 +18,7 @@ const Todos = ({ user, setUser }) => {
 
     useEffect(() => {
         getAllUserTodos(_id, setTodo);
+        setLoading(false);
     }, []);
 
     const updateMode = (_id, text) => {

@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import Todos from "./components/Todos/Todos";
 import Auth from "./components/Auth/Auth";
 import { Routes, Route, Navigate } from "react-router-dom";
+import Spinner from "react-spinner";
 
 function App() {
     const [user, setUser] = useState("");
+    const [loading, setLoading] = useState(false);
 
     return (
         <div className="App">
@@ -20,7 +22,11 @@ function App() {
                     path="/home"
                     element={
                         user ? (
-                            <Todos user={user} setUser={setUser} />
+                            <Todos
+                                user={user}
+                                setUser={setUser}
+                                setLoading={setLoading}
+                            />
                         ) : (
                             <Navigate to="../auth" />
                         )
@@ -32,11 +38,12 @@ function App() {
                         user ? (
                             <Navigate to="../home" />
                         ) : (
-                            <Auth setUser={setUser} />
+                            <Auth setUser={setUser} setLoading={setLoading} />
                         )
                     }
                 />
             </Routes>
+            {loading && <Spinner />}
         </div>
     );
 }
