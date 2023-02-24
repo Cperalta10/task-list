@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Todos from "./components/Todos/Todos";
 import Auth from "./components/Auth/Auth";
 import { Routes, Route, Navigate } from "react-router-dom";
-import Spinner from "react-spinner";
+import FadeLoader from "react-spinners/FadeLoader";
 
 function App() {
     const [user, setUser] = useState("");
@@ -43,7 +43,9 @@ function App() {
                     }
                 />
             </Routes>
-            {loading && <Spinner />}
+            {loading && (
+                <FadeLoader color="#ffffff" height="10px" width="3px" />
+            )}
         </div>
     );
 }

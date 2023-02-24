@@ -8,7 +8,6 @@ const signup = (email, username, setUser) => {
         .post(`${baseUrl}/user/signup`, { email, username })
         .then((data) => {
             setUser(data.data.user);
-            console.log(data.data.user);
         })
         .catch((err) => {
             console.log(err);
