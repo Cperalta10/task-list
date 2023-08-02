@@ -9,6 +9,10 @@ function App() {
     const [user, setUser] = useState("");
     const [loading, setLoading] = useState(false);
 
+    {
+        loading && <FadeLoader color="#ffffff" height="10px" width="3px" />;
+    }
+
     return (
         <div className="App">
             <Routes>
@@ -43,9 +47,9 @@ function App() {
                     }
                 />
             </Routes>
-            {loading && (
+            {/* {loading && (
                 <FadeLoader color="#ffffff" height="10px" width="3px" />
-            )}
+            )} */}
         </div>
     );
 }
