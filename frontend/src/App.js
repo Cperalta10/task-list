@@ -9,8 +9,12 @@ function App() {
     const [user, setUser] = useState("");
     const [loading, setLoading] = useState(false);
 
-    {
-        loading && <FadeLoader color="#ffffff" height="10px" width="3px" />;
+    if (loading) {
+        return (
+            <div className="App">
+                <FadeLoader color="#000000" height="10px" width="3px" />;
+            </div>
+        );
     }
 
     return (
@@ -47,9 +51,6 @@ function App() {
                     }
                 />
             </Routes>
-            {/* {loading && (
-                <FadeLoader color="#ffffff" height="10px" width="3px" />
-            )} */}
         </div>
     );
 }
