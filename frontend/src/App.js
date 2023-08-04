@@ -12,7 +12,7 @@ function App() {
     if (loading) {
         return (
             <div className="App">
-                <FadeLoader color="#000000" height="10px" width="3px" />;
+                <FadeLoader color="#000000" height="10px" width="3px" />
             </div>
         );
     }
