@@ -1,21 +1,19 @@
 import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import jwt_decode from "jwt-decode";
 import { signup } from "../../utils/handleApi";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./LoginButton";
 
-function Auth({ setUser, setLoading }) {
+function Auth({ setCurUser, setLoading }) {
+    const { user } = useAuth0();
+
+    if (user) {
+        setLoading(false);
+        signup(user.email, user.name, setCurUser);
+    }
+
     return (
         <div>
-            <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                    var decoded = jwt_decode(credentialResponse.credential);
-                    signup(decoded.email, decoded.name, setUser);
-                    setLoading(true);
-                }}
-                onError={() => {
-                    console.log("Login Failed");
-                }}
-            />
+            <LoginButton setCurUser={setCurUser} setLoading={setLoading} />
         </div>
     );
 }

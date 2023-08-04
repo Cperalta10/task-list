@@ -3,11 +3,11 @@ import axios from "axios";
 // const baseUrl = "http://localhost:9000";
 const baseUrl = "https://todods.onrender.com";
 
-const signup = (email, username, setUser) => {
+const signup = (email, username, setCurUser) => {
     axios
         .post(`${baseUrl}/user/signup`, { email, username })
         .then((data) => {
-            setUser(data.data.user);
+            setCurUser(data.data.user);
         })
         .catch((err) => {
             console.log(err);

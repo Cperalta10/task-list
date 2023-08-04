@@ -8,9 +8,10 @@ import {
     updateComplete,
     getAllUserTodos,
 } from "../../utils/handleApi";
+import LogoutButton from "../Auth/LogoutButton";
 
-const Todos = ({ user, setUser, setLoading }) => {
-    const { _id } = user;
+const Todos = ({ curUser }) => {
+    const { _id } = curUser;
     const [todo, setTodo] = useState([]);
     const [text, setText] = useState("");
     const [isUpdating, setIsUpdating] = useState(false);
@@ -18,7 +19,6 @@ const Todos = ({ user, setUser, setLoading }) => {
 
     useEffect(() => {
         getAllUserTodos(_id, setTodo);
-        setLoading(false);
     }, []);
 
     const updateMode = (_id, text) => {
@@ -30,10 +30,8 @@ const Todos = ({ user, setUser, setLoading }) => {
     return (
         <div className="todos box scroll">
             <div className="logout">
-                <h2>Welcome, {user.username}</h2>
-                <button className="logoutBtn" onClick={() => setUser("")}>
-                    Logout
-                </button>
+                <h2>Welcome, {curUser.username}</h2>
+                <LogoutButton />
             </div>
             <h1
                 style={{
