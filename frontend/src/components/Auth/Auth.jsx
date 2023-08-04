@@ -2,18 +2,22 @@ import React from "react";
 import { signup } from "../../utils/handleApi";
 import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./LoginButton";
+import FadeLoader from "react-spinners/FadeLoader";
 
-function Auth({ setCurUser, setLoading }) {
-    const { user } = useAuth0();
+function Auth({ setCurUser }) {
+    const { user, isLoading } = useAuth0();
 
     if (user) {
-        setLoading(false);
         signup(user.email, user.name, setCurUser);
+    }
+
+    if (isLoading) {
+        return <FadeLoader />;
     }
 
     return (
         <div>
-            <LoginButton setCurUser={setCurUser} setLoading={setLoading} />
+            <LoginButton setCurUser={setCurUser} />
         </div>
     );
 }
